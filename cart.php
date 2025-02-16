@@ -74,19 +74,23 @@ $grand_total = 0;
 
       <?php
          $grand_total = 0;
-         $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
+         $select_cart = $conn->prepare("
+            SELECT c.*, p.name, p.price, p.image, p.description 
+            FROM `cart` c 
+            JOIN `products` p ON c.product_id = p.id 
+            WHERE c.user_id = ?
+         ");
          $select_cart->execute([$user_id]);
          if($select_cart->rowCount() > 0){
             while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
       ?>
       <form action="" method="post" class="box">
          <input type="hidden" name="cart_id" value="<?= $fetch_cart['id']; ?>">
-         <input type="hidden" name="des" value="<?= $fetch_products['des']; ?>">
-         <a href="quick_view.php?pid=<?= $fetch_cart['pid']; ?>" class="fas fa-eye"></a>
+         <a href="quick_view.php?pid=<?= $fetch_cart['product_id']; ?>" class="fas fa-eye"></a>
          <button type="submit" class="fas fa-times" name="delete" onclick="return confirm('delete this item?');"></button>
          <img src="uploaded_img/<?= $fetch_cart['image']; ?>" alt="">
          <div class="name"><?= $fetch_cart['name']; ?></div>
-         <div class="des"><?= $fetch_cart['des']; ?></div>
+         <div class="description"><?= $fetch_cart['description']; ?></div>
          <div class="flex">
             <div class="price"><span>Rs.</span><?= $fetch_cart['price']; ?></div>
             <input type="number" name="qty" class="qty" min="1" max="99" value="<?= $fetch_cart['quantity']; ?>" maxlength="2">
@@ -105,8 +109,8 @@ $grand_total = 0;
    </div>
 
    <div class="cart-total">
-      <p>cart total : <span>Rs.<?= $grand_total; ?></span></p>
-      <a href="checkout.php" class="btn <?= ($grand_total > 0)?'':'disabled'; ?>">proceed to checkout</a>
+      <p>cart total : <span>Rs.<?= $grand_total; ?>/-</span></p>
+      <a href="checkout.php" class="btn <?= ($grand_total > 0)?'':'disabled'; ?>">Proceed To Checkout</a>
    </div>
 
    <div class="more-btn">
@@ -120,27 +124,10 @@ $grand_total = 0;
 
 <!-- shopping cart section ends -->
 
-
-
-
-
-
-
-
-
-
 <!-- footer section starts  -->
 <?php include 'components/footer.php'; ?>
 <!-- footer section ends -->
 
-
-
-
-
-
-
-
-<!-- custom js file link  -->
 <script src="js/script.js"></script>
 
 </body>

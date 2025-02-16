@@ -77,22 +77,22 @@ include 'components/add_cart.php';
    <h1 class="title">Shop by Category</h1>
 
    <div class="box-container">
-      <a href="category.php?category=Electronics" class="box">
+      <a href="category.php?category=Electronics" class="box" style="text-decoration: none;">
          <img src="images/cat-electronics.png" alt="">
          <h3>Electronics</h3>
       </a>
       
-      <a href="category.php?category=Fashion" class="box">
+      <a href="category.php?category=Fashion" class="box" style="text-decoration: none;">
          <img src="images/cat-fashion.png" alt="">
          <h3>Fashion</h3>
       </a>
       
-      <a href="category.php?category=Home" class="box">
+      <a href="category.php?category=Home" class="box" style="text-decoration: none;">
          <img src="images/cat-home.png" alt="">
          <h3>Home & Living</h3>
       </a>
       
-      <a href="category.php?category=Books" class="box">
+      <a href="category.php?category=Books" class="box" style="text-decoration: none;">
          <img src="images/cat-books.png" alt="">
          <h3>Books</h3>
       </a>

@@ -5,7 +5,7 @@
       <div class="box">
          <img src="images/email-icon.png" alt="">
          <h3>our email</h3>
-         <a href="mailto:ynotfoods@gmail.com">ynotfoods@gamil.com</a>
+         <a href="mailto:ynotshop@gmail.com">ynotshop@gmail.com</a>
       </div>
 
       <div class="box">
@@ -28,7 +28,7 @@
 
    </section>
 
-   <div class="credit">&copy; copyright @ <?= date('Y'); ?> by <span>Y-NOT FOODS</span> | all rights reserved!</div>
+   <div class="credit">&copy; copyright @ <?= date('Y'); ?> by <span>Y-NOT SHOP</span> | all rights reserved!</div>
 
 </footer>
 
