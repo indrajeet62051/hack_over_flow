@@ -341,6 +341,10 @@ if(isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
                     <input type="email" name="email" required/>
                 </div>
                 <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="number" name="number" required/>
+                </div>
+                <div class="form-group">
                     <label>Password</label>
                     <input type="password" name="password" required/>
                 </div>

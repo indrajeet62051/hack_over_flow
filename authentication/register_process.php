@@ -7,6 +7,7 @@ if(isset($_POST['register'])) {
     $password = md5($_POST['password']); // Using MD5 for password hashing
     $address = $_POST['address'];
     $user_type = 'user'; // Default user type for new registrations
+    $number = $_POST['number'];
 
     try {
         // Check if email already exists
@@ -18,8 +19,8 @@ if(isset($_POST['register'])) {
             header('location:Login.php?error=' . urlencode($message));
         } else {
             // Insert new user
-            $insert_user = $conn->prepare("INSERT INTO `users` (name, email, password, address, user_type) VALUES (?, ?, ?, ?, ?)");
-            $insert_user->execute([$name, $email, $password, $address, $user_type]);
+            $insert_user = $conn->prepare("INSERT INTO `users` (name, email, password, address, user_type, number) VALUES (?, ?, ?, ?, ?, ?)");
+            $insert_user->execute([$name, $email, $password, $address, $user_type, $number]);
             
             $message = 'Registered successfully! Please login.';
             header('location:Login.php?success=' . urlencode($message));
