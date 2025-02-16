@@ -21,7 +21,7 @@ if(isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
 
     body {
         font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-        background-image: url(Background.webp);
+        background-image: url(background.png);
         background-size: cover;
         background-repeat: no-repeat;
     }
@@ -303,13 +303,51 @@ if(isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
             }
             ?>
             <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" required/>
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" required/>
-            </div>
+    <label>Email</label>
+    <input type="email" name="email" id="email" required />
+    <small id="emailError" style="color: red; display: none;">Invalid email format</small>
+</div>
+
+<script>
+document.getElementById("email").addEventListener("input", function () {
+    const emailInput = this.value;
+    const emailError = document.getElementById("emailError");
+
+    // Regular expression for email validation
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!emailPattern.test(emailInput)) {
+        emailError.style.display = "block"; // Show error message
+    } else {
+        emailError.style.display = "none"; // Hide error message
+    }
+});
+</script>
+
+<div class="form-group">
+    <label>Password</label>
+    <input type="password" name="password" id="password" required />
+    <small id="passwordError" style="color: red; display: none;">
+        Password must be at least 8 characters long, contain 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.
+    </small>
+</div>
+
+<script>
+document.getElementById("password").addEventListener("input", function () {
+    const password = this.value;
+    const passwordError = document.getElementById("passwordError");
+
+    // Regular expression for password validation
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!passwordPattern.test(password)) {
+        passwordError.style.display = "block"; // Show error message
+    } else {
+        passwordError.style.display = "none"; // Hide error message
+    }
+});
+</script>
+
             <button type="submit" class="submit" name="login">Sign In</button>
         </form>
 
