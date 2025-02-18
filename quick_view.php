@@ -12,6 +12,30 @@ if(isset($_SESSION['user_id'])){
 
 include 'components/add_cart.php';
 
+if(isset($_POST['submit_review'])){
+   if($user_id == ''){
+      $message[] = 'please login first to submit a review';
+   }else{
+      $product_id = $_POST['product_id'];
+      $rating = $_POST['rating'];
+      $review = $_POST['review'];
+      $review = filter_var($review, FILTER_SANITIZE_STRING);
+
+      $check_review = $conn->prepare("SELECT * FROM `reviews` WHERE user_id = ? AND product_id = ?");
+      $check_review->execute([$user_id, $product_id]);
+
+      if($check_review->rowCount() > 0){
+         $update_review = $conn->prepare("UPDATE `reviews` SET rating = ?, review = ? WHERE user_id = ? AND product_id = ?");
+         $update_review->execute([$rating, $review, $user_id, $product_id]);
+         $message[] = 'review updated successfully!';
+      }else{
+         $insert_review = $conn->prepare("INSERT INTO `reviews`(user_id, product_id, rating, review) VALUES(?,?,?,?)");
+         $insert_review->execute([$user_id, $product_id, $rating, $review]);
+         $message[] = 'review submitted successfully!';
+      }
+   }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +71,6 @@ include 'components/add_cart.php';
    <form action="" method="post" class="box">
       <input type="hidden" name="pid" value="<?= $fetch_products['id']; ?>">
       <input type="hidden" name="name" value="<?= $fetch_products['name']; ?>">
-      <input type="hidden" name="des" value="<?= $fetch_products['description']; ?>">
       <input type="hidden" name="price" value="<?= $fetch_products['price']; ?>">
       <input type="hidden" name="image" value="<?= $fetch_products['image']; ?>">
       <div class="row">
@@ -69,6 +92,62 @@ include 'components/add_cart.php';
          </div>
       </div>
    </form>
+   
+   <!-- Reviews Section -->
+   <div class="reviews-section">
+      <h2>Product Reviews</h2>
+      
+      <?php if($user_id != ''): ?>
+      <!-- Review Form -->
+      <form action="" method="post" class="review-form">
+         <input type="hidden" name="product_id" value="<?= $pid; ?>">
+         <div class="rating">
+            <span>Your Rating:</span>
+            <select name="rating" required>
+               <option value="5">5 Stars ⭐⭐⭐⭐⭐</option>
+               <option value="4">4 Stars ⭐⭐⭐⭐</option>
+               <option value="3">3 Stars ⭐⭐⭐</option>
+               <option value="2">2 Stars ⭐⭐</option>
+               <option value="1">1 Star ⭐</option>
+            </select>
+         </div>
+         <textarea name="review" placeholder="Write your review here..." required></textarea>
+         <input type="submit" value="Submit Review" name="submit_review" class="btn">
+      </form>
+      <?php else: ?>
+         <p class="login-message">Please <a href="authentication/Login.php">login</a> to submit a review.</p>
+      <?php endif; ?>
+
+      <!-- Display Reviews -->
+      <div class="reviews-container">
+         <?php
+            $select_reviews = $conn->prepare("
+               SELECT r.*, u.name as user_name 
+               FROM `reviews` r 
+               JOIN `users` u ON r.user_id = u.id 
+               WHERE r.product_id = ? 
+               ORDER BY r.created_at DESC
+            ");
+            $select_reviews->execute([$pid]);
+            
+            if($select_reviews->rowCount() > 0){
+               while($review = $select_reviews->fetch(PDO::FETCH_ASSOC)){
+                  $stars = str_repeat('⭐', $review['rating']);
+         ?>
+         <div class="review-box">
+            <div class="user"><?= $review['user_name']; ?></div>
+            <div class="rating"><?= $stars; ?></div>
+            <div class="date"><?= date('d M Y', strtotime($review['created_at'])); ?></div>
+            <div class="text"><?= $review['review']; ?></div>
+         </div>
+         <?php
+               }
+            }else{
+               echo '<p class="empty">no reviews yet!</p>';
+            }
+         ?>
+      </div>
+   </div>
    <?php
          }
       }else{

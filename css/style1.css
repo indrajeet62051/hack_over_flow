@@ -515,7 +515,6 @@ section {
 
 .heading p a {
    color: var(--black);
-   text-decoration: none;
 }
 
 .heading p a:hover {
@@ -1703,4 +1702,137 @@ section {
 .reviews .box-container::-webkit-scrollbar-thumb {
    background: var(--main-color);
    border-radius: 10px;
+}
+
+/* Reviews Section Styles */
+.reviews-section {
+   max-width: 1200px;
+   margin: 2rem auto;
+   padding: 2rem;
+   background-color: var(--white);
+   border-radius: .5rem;
+   box-shadow: var(--box-shadow);
+}
+
+.reviews-section h2 {
+   font-size: 2.5rem;
+   color: var(--black);
+   text-align: center;
+   margin-bottom: 2rem;
+}
+
+.review-form {
+   max-width: 800px;
+   margin: 0 auto 3rem auto;
+   padding: 2rem;
+   border: var(--border);
+   border-radius: .5rem;
+}
+
+.review-form .rating {
+   margin-bottom: 1.5rem;
+}
+
+.review-form .rating span {
+   font-size: 1.8rem;
+   color: var(--black);
+   margin-right: 1rem;
+}
+
+.review-form .rating select {
+   padding: 1rem;
+   font-size: 1.6rem;
+   border: var(--border);
+   border-radius: .5rem;
+   background-color: var(--white);
+   cursor: pointer;
+}
+
+.review-form textarea {
+   width: 100%;
+   height: 150px;
+   padding: 1.5rem;
+   font-size: 1.6rem;
+   border: var(--border);
+   border-radius: .5rem;
+   resize: none;
+   margin-bottom: 1.5rem;
+}
+
+.reviews-container {
+   display: grid;
+   gap: 2rem;
+}
+
+.review-box {
+   background-color: var(--white);
+   padding: 2rem;
+   border: var(--border);
+   border-radius: .5rem;
+   position: relative;
+}
+
+.review-box .user {
+   font-size: 1.8rem;
+   color: var(--black);
+   font-weight: 600;
+   margin-bottom: .5rem;
+}
+
+.review-box .rating {
+   font-size: 1.6rem;
+   margin-bottom: .5rem;
+}
+
+.review-box .date {
+   font-size: 1.4rem;
+   color: var(--light-color);
+   margin-bottom: 1rem;
+}
+
+.review-box .text {
+   font-size: 1.6rem;
+   line-height: 1.5;
+   color: var(--black);
+}
+
+.login-message {
+   text-align: center;
+   font-size: 1.8rem;
+   color: var(--black);
+   margin: 2rem 0;
+}
+
+.login-message a {
+   color: var(--yellow);
+   text-decoration: underline;
+}
+
+.login-message a:hover {
+   color: var(--black);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+   .review-form {
+      padding: 1.5rem;
+   }
+
+   .review-box {
+      padding: 1.5rem;
+   }
+
+   .reviews-section h2 {
+      font-size: 2rem;
+   }
+
+   .review-form .rating span,
+   .review-box .user {
+      font-size: 1.6rem;
+   }
+
+   .review-form textarea,
+   .review-box .text {
+      font-size: 1.4rem;
+   }
 }
